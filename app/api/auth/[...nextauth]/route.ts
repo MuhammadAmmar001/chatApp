@@ -56,7 +56,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import prisma from '@/app/libs/prismadb'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-const authOptions = {
+export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     adapter: PrismaAdapter(prisma),
     providers: [
