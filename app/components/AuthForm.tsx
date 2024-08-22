@@ -14,7 +14,6 @@ import { useRouter } from 'next/navigation'
 type mode = 'Login' | 'Register'
 export default function AuthForm() {
     const session = useSession();
-    console.log("session in authform ", session);
     const router = useRouter()
     const [mode, setMode] = useState<mode>('Login')
     const [isLoading, setIsLoading] = useState(false)
@@ -46,7 +45,6 @@ export default function AuthForm() {
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
         if (mode === 'Login') {
-            // console.log("Login")
             signIn('credentials', {
                 ...data, redirect: false
             }).then((callback) => {
