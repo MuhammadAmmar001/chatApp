@@ -47,11 +47,14 @@
 // const handler = NextAuth(authOptions)
 
 // export { handler as GET, handler as POST }
+
+
 import bcrypt from 'bcrypt'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import prisma from '@/app/libs/prismadb'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -89,8 +92,10 @@ const authOptions = {
     ],
     debug: process.env.NODE_ENV == 'development',
     session: {
-        strategy: 'jwt' as const, // Add 'as const' to specify the type
+        strategy: 'jwt' as const,
     },
 }
 
-export default NextAuth(authOptions)
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    return NextAuth(req, res, authOptions)
+}
