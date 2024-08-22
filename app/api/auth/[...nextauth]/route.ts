@@ -2,10 +2,9 @@ import bcrypt from 'bcrypt'
 import NextAuth, { AuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-
 import prisma from '@/app/libs/prismadb'
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
     adapter: PrismaAdapter(prisma),
     providers: [
@@ -44,8 +43,7 @@ export const authOptions: AuthOptions = {
         strategy: 'jwt'
     },
 }
-// console.log("authOptions")
-// console.log(authOptions)
+
 const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
