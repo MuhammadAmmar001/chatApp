@@ -78,11 +78,29 @@ export async function POST(
             }
         })
 
-        if (!updatedMessage.body) { return NextResponse.json(updatedMessage) }
-        const encryptedBody = JSON.parse(updatedMessage.body)
-        const decryptedBody = decryptMessage(encryptedBody)
+        // if (!updatedMessage.body) { return NextResponse.json(updatedMessage) }
+        // const encryptedBody = JSON.parse(updatedMessage.body)
+        // const decryptedBody = decryptMessage(encryptedBody)
+        // updatedMessage.body = decryptedBody
 
-        updatedMessage.body = decryptedBody
+        let decryptedBody: string
+        if (!updatedMessage.body) { return NextResponse.json(updatedMessage) }
+        if (updatedMessage.body.startsWith('{')) {
+            let encryptedBody: { iv: string; encryptedData: string };
+
+            try {
+                encryptedBody = JSON.parse(updatedMessage.body);
+            } catch (e) {
+                console.error('Body is not valid JSON:', updatedMessage.body);
+                return new NextResponse('Invalid message format', { status: 400 });
+            }
+
+            decryptedBody = decryptMessage(encryptedBody);
+        } else {
+            decryptedBody = updatedMessage.body;
+        }
+
+        updatedMessage.body = decryptedBody;
 
         await pusherServer.trigger(currentUser.email, 'conversation:update', {
             id: conversationId,

@@ -2,22 +2,22 @@ import prisma from "@/app/libs/prismadb"
 import getCurrentUser from "./getCurrentUser"
 import crypto from 'crypto'
 
-const algorithm = 'aes-256-cbc';
-const ENCRYPTION_KEY = Buffer.from(process.env.NEXT_PUBLIC_ENCRYPTION_KEY!, 'base64');
+// const algorithm = 'aes-256-cbc';
+// const ENCRYPTION_KEY = Buffer.from(process.env.NEXT_PUBLIC_ENCRYPTION_KEY!, 'base64');
 
 
-function decryptMessage(encryptedMessage: { iv: string; encryptedData: string }): string {
-    const iv = encryptedMessage.iv;
-    const encrypted = encryptedMessage.encryptedData;
+// function decryptMessage(encryptedMessage: { iv: string; encryptedData: string }): string {
+//     const iv = encryptedMessage.iv;
+//     const encrypted = encryptedMessage.encryptedData;
 
-    const ivBuffer = Buffer.from(iv, 'hex');
-    const decipher = crypto.createDecipheriv(algorithm, Buffer.from(ENCRYPTION_KEY), ivBuffer);
+//     const ivBuffer = Buffer.from(iv, 'hex');
+//     const decipher = crypto.createDecipheriv(algorithm, Buffer.from(ENCRYPTION_KEY), ivBuffer);
 
-    let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
+//     let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+//     decrypted += decipher.final('utf8');
 
-    return decrypted;
-}
+//     return decrypted;
+// }
 
 
 const getConversations = async () => {

@@ -49,15 +49,17 @@ export async function POST(
             return new NextResponse('Unauthorized', { status: 401 })
         }
 
-        const encryptedResult = encryptMessage(message);
-
-        if (!encryptedResult) {
-            return new NextResponse('Invalid message', { status: 400 });
+        let encryptedResult = null;
+        if (message) {
+            encryptedResult = encryptMessage(message);
+            if (!encryptedResult) {
+                return new NextResponse('Invalid message', { status: 400 });
+            }
         }
 
         const newMessage = await prisma.message.create({
             data: {
-                body: JSON.stringify(encryptedResult),
+                body: encryptedResult ? JSON.stringify(encryptedResult) : null,
                 image: image,
                 conversation: {
                     connect: {
@@ -84,16 +86,12 @@ export async function POST(
         })
         // =================
 
-        if (!newMessage.body) {
-            return
-        }
-        const decryptedBody = decryptMessage(JSON.parse(newMessage.body));
+        const decryptedBody = newMessage.body ? decryptMessage(JSON.parse(newMessage.body)) : null;
 
         const responseMessage = {
             ...newMessage,
             body: decryptedBody
         };
-
         // =================
         const updatedConversation = await prisma.conversation.update({
             where: {

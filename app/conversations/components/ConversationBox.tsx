@@ -9,6 +9,7 @@ import { FullConversationType } from '@/app/types'
 import useOtherUser from '@/app/hooks/useOtherUser'
 import Avatar from '@/app/components/avatar'
 import crypto from 'crypto'
+import { NextResponse } from 'next/server'
 
 const algorithm = 'aes-256-cbc';
 const ENCRYPTION_KEY = Buffer.from(process.env.NEXT_PUBLIC_ENCRYPTION_KEY!, 'base64');
@@ -48,8 +49,7 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
 
     const lastMessage = useMemo(() => {
         const decryptedMsgs = data.messages.map((msg) => {
-            if (!msg.body) return msg; // Return original message if body is missing
-
+            if (!msg.body) return msg;
             try {
                 const encryptedBody = JSON.parse(msg.body);
                 const decryptedBody = decryptMessage(encryptedBody);
@@ -58,6 +58,8 @@ const ConversationBox: React.FC<ConversationBoxProps> = ({
                 console.error('Error parsing or decrypting message:', error);
                 return msg;
             }
+
+
         });
         return decryptedMsgs[decryptedMsgs.length - 1]
     }, [data.messages]);

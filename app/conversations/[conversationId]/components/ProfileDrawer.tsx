@@ -114,7 +114,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                                                     Joined
                                                                 </dt>
                                                                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-2">
-                                                                    <time datetime={joinedDate}>{joinedDate}</time>
+                                                                    <time dateTime={joinedDate}>{joinedDate}</time>
                                                                 </dd>
                                                             </div>
                                                         </>
