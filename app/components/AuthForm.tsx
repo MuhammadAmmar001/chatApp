@@ -23,8 +23,6 @@ export default function AuthForm() {
         }
     }, [session?.status, router])
 
-
-
     const toggleMode = useCallback(() => {
         if (mode == 'Login') {
             setMode('Register')

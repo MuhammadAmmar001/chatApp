@@ -25,7 +25,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
-    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<FieldValues>({
+    const { register, handleSubmit, formState: { errors } } = useForm<FieldValues>({
         defaultValues: {
             name: currentUser?.name,
         }

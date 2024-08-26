@@ -9,26 +9,26 @@ import { pusherClient } from "@/app/libs/pusher"
 import { find } from "lodash"
 import crypto from 'crypto';
 
-const algorithm = 'aes-256-cbc';
-const ENCRYPTION_KEY = Buffer.from(process.env.NEXT_PUBLIC_ENCRYPTION_KEY!, 'base64');
+// const algorithm = 'aes-256-cbc';
+// const ENCRYPTION_KEY = Buffer.from(process.env.NEXT_PUBLIC_ENCRYPTION_KEY!, 'base64');
 
-function decryptMessage(encryptedMessage: { iv: string; encryptedData: string }): string {
-    // const [iv, encrypted] = encryptedMessage.split(':');
+// function decryptMessage(encryptedMessage: { iv: string; encryptedData: string }): string {
+//     // const [iv, encrypted] = encryptedMessage.split(':');
 
-    const iv = encryptedMessage.iv;
-    const encrypted = encryptedMessage.encryptedData;
+//     const iv = encryptedMessage.iv;
+//     const encrypted = encryptedMessage.encryptedData;
 
-    // const encrypted = encryptedMessage
-    console.log("INSIDE DECRYPTED FUNCTION OF BODY: ", encrypted);
-    const ivBuffer = Buffer.from(iv, 'hex');
-    const decipher = crypto.createDecipheriv(algorithm, Buffer.from(ENCRYPTION_KEY), ivBuffer);
+//     // const encrypted = encryptedMessage
+//     console.log("INSIDE DECRYPTED FUNCTION OF BODY: ", encrypted);
+//     const ivBuffer = Buffer.from(iv, 'hex');
+//     const decipher = crypto.createDecipheriv(algorithm, Buffer.from(ENCRYPTION_KEY), ivBuffer);
 
-    let decrypted = decipher.update(encrypted, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
-    console.log(" DECRYPTED OUTPUT OF BODY: ", decrypted);
+//     let decrypted = decipher.update(encrypted, 'hex', 'utf8');
+//     decrypted += decipher.final('utf8');
+//     console.log(" DECRYPTED OUTPUT OF BODY: ", decrypted);
 
-    return decrypted;
-}
+//     return decrypted;
+// }
 
 interface BodyProps {
     initialMessages: FullMessageType[]
